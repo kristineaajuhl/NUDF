@@ -3,6 +3,8 @@ by Kristine Sørensen, Ole de Backer, Klaus Kofoed, Oscar Camara and Rasmus Paul
 
 Paper accepted for oral presentation at ISBI 2022 
 
+[![reconstruction](results_v3_cropped.png)](results_v3_cropped.png)
+
 This repository is currently under construction
 
 # Data preparation
