@@ -19,9 +19,11 @@ We use an automatic ROI-detection network - for more information on this see htt
 
 # Training 
 
+
+
 # Evaluation
 
 # Acknowledgements
-Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. 
+Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. https://github.com/jchibane/if-net
 
 
