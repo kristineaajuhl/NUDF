@@ -42,11 +42,21 @@ python PC_generate.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m Shape
 
 ```-batch_points``` decides how many points is predicted per batch. For fastest processing the number should be chosen as high as possible without exceeding the GPU memory capacity. 
 
+The point coordinates are saved as a .txt file
+
 # Meshing the point cloud
+To convert the coordinates from the above .txt file into the predicted mesh, we use a combination of poisson resampling, poisson reconstruction and removal of mesh parts that are not supported by the point cloud. 
 
+Code for doing this can be seen in 
+```
+test.py
+```
 
+The script also holds code for evaluating the predictions.
 
 # Acknowledgements & Licence
 Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. https://github.com/jchibane/if-net
+
+
 
 
