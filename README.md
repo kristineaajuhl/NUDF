@@ -3,9 +3,9 @@ by Kristine Sørensen, Ole de Backer, Klaus Kofoed, Oscar Camara and Rasmus Paul
 
 Paper accepted for oral presentation at ISBI 2022 
 
-[![reconstruction](results_v3_cropped.png)](results_v3_cropped.png)
+!!! This repository is currently under construction !!!
 
-This repository is currently under construction
+[![reconstruction](Overview_v2.png)](Overview_v2.png)
 
 # Data preparation
 For each training example we need a set consisting of the input image (.npy) and a collection of point-distance samples (.npz).
@@ -53,6 +53,10 @@ test.py
 ```
 
 The script also holds code for evaluating the predictions.
+
+# Results from ISBI2022
+Comparison between manually created meshes, 3D U-net predictions and our proposed NUDF. 
+[![reconstruction](results_v3_cropped.png)](results_v3_cropped.png)
 
 # Acknowledgements & Licence
 Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. https://github.com/jchibane/if-net
