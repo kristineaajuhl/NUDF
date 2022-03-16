@@ -32,9 +32,21 @@ python train.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m ShapeNet64V
 
 ```-batch_size``` is the batch size and is chosen as high as possible without exceeding the memory capacity of the GPU.
 
-# Evaluation
+# Dense Point Cloud Prediction
+To create a dense point cloud based on trained model the following command is run
+```
+python PC_generate.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m ShapeNet64Vox -checkpoint 260 -batch_points 100000
+```
 
-# Acknowledgements
+```-checkpoint``` indicates which epoch during training that is used for prediction
+
+```-batch_points``` decides how many points is predicted per batch. For fastest processing the number should be chosen as high as possible without exceeding the GPU memory capacity. 
+
+# Meshing the point cloud
+
+
+
+# Acknowledgements & Licence
 Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. https://github.com/jchibane/if-net
 
 
