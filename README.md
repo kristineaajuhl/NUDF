@@ -1,13 +1,11 @@
 # NUDF: NEURAL UNSIGNED DISTANCE FIELDS FOR HIGH RESOLUTION 3D MEDICAL IMAGE SEGMENTATION
-by Kristine Sørensen, Ole de Backer, Klaus Kofoed, Oscar Camara and Rasmus Paulsen
+by **Kristine Sørensen**, Ole de Backer, Klaus Kofoed, Oscar Camara and Rasmus Paulsen
 
-Paper accepted for oral presentation at ISBI 2022 
-
-!!! This repository is currently under construction !!!
+Paper presented at ISBI 2022 https://biomedicalimaging.org/2022/
 
 [![reconstruction](Overview_v2.png)](Overview_v2.png)
 
-# Data preparation
+## Data preparation
 For each training example we need a set consisting of the input image (.npy) and a collection of point-distance samples (.npz).
 An example of how we prepared the data used for the paper can be seen in 
 
@@ -19,7 +17,7 @@ We use an automatic ROI-detection network - for more information on this see htt
 
 An example of an artificial training example can be seen in ```Data_example```.
 
-# Training 
+## Training 
 To initiate training the following command is run
 ```
 python train.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m ShapeNet64Vox -batch_size 5
@@ -32,7 +30,7 @@ python train.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m ShapeNet64V
 
 ```-batch_size``` is the batch size and is chosen as high as possible without exceeding the memory capacity of the GPU.
 
-# Dense Point Cloud Prediction
+## Dense Point Cloud Prediction
 To create a dense point cloud based on trained model the following command is run
 ```
 python PC_generate.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m ShapeNet64Vox -checkpoint 260 -batch_points 100000
@@ -44,7 +42,7 @@ python PC_generate.py -std_dev in1 out1 0.0 -dist 0.45 0.45 0.1 -res 64 -m Shape
 
 The point coordinates are saved as a .txt file
 
-# Meshing the point cloud
+## Meshing the point cloud
 To convert the coordinates from the above .txt file into the predicted mesh, we use a combination of poisson resampling, poisson reconstruction and removal of mesh parts that are not supported by the point cloud. 
 
 Code for doing this can be seen in 
@@ -54,11 +52,14 @@ test.py
 
 The script also holds code for evaluating the predictions.
 
-# Results from ISBI2022
+## Results from ISBI2022
 Comparison between manually created meshes, 3D U-net predictions and our proposed NUDF. 
 [![reconstruction](results_v3_cropped.png)](results_v3_cropped.png)
 
-# Acknowledgements & Licence
+## Contact
+For any questions about the paper or the code - please contact **Kristine Sørensen (kajul@dtu.dk)**.
+
+## Acknowledgements
 Some scripts take base in code from "Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion" from Chibane et. al. https://github.com/jchibane/if-net
 
 
