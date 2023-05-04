@@ -49,21 +49,21 @@ if __name__ == '__main__':
             print(ms.number_meshes())
         
             # Subsample pointcloud
-            ms.poisson_disk_sampling(samplenum = 10000, subsample = True)
+            ms.generate_sampling_poisson_disk(samplenum = 10000, subsample = True)
             ms.set_current_mesh(1)
             ms.save_current_mesh(output_file2)
             #print(ms.number_meshes())
             
             # Compute Normals
-            ms.compute_normals_for_point_sets()
+            ms.compute_normal_for_point_clouds()
             
             # Reconstruct surface
-            ms.surface_reconstruction_screened_poisson()
+            ms.generate_surface_reconstruction_screened_poisson()
             #ms.surface_reconstruction_ball_pivoting(ballradius=0.01)
             starting_point = ms.number_meshes()
             
             #Split in connected components and choose largest
-            ms.split_in_connected_components()    
+            ms.generate_splitting_by_connected_components()    
             max_vertex_number = 0
             largest_mesh = 0
             
