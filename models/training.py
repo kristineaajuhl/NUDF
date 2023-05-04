@@ -141,10 +141,10 @@ class Trainer(object):
         num_batches = 15
         for _ in range(num_batches):
              try:
-                 val_batch = self.val_data_iterator.next()
+                 val_batch = next(self.val_data_iterator)
              except:
                  self.val_data_iterator = self.val_dataset.get_loader().__iter__()
-                 val_batch = self.val_data_iterator.next()
+                 val_batch = next(self.val_data_iterator)
 
              sum_val_loss += self.compute_loss( val_batch).item()
 
