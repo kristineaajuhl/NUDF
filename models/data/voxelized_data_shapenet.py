@@ -68,31 +68,38 @@ class VoxelizedDataset(Dataset):
             voxel_path = path + '/voxelized_point_cloud_{}res_{}points.npz'.format(self.res, self.pointcloud_samples)
             occupancies = np.unpackbits(np.load(voxel_path)['compressed_occupancies'])
             input = np.reshape(occupancies, (self.res,)*3)
+          
+        if self.mode == 'test':
+            points = []
+            coords = []
+            occupancies = []
+            return {'grid_coords':np.array(coords, dtype=np.float32),'occupancies': np.array(occupancies, dtype=np.float32),'points':np.array(points, dtype=np.float32), 'inputs': np.array(input, dtype=np.float32), 'path' : path}
+        
+        else: 
+            points = []
+            coords = []
+            occupancies = []
 
-        points = []
-        coords = []
-        occupancies = []
+            for i, num in enumerate(self.num_samples):
+                boundary_samples_path = path + '/boundary_{}_samples.npz'.format(self.sample_sigmas[i])
+                boundary_samples_npz = np.load(boundary_samples_path)
+                boundary_sample_points = boundary_samples_npz['points']
+                boundary_sample_coords = boundary_samples_npz['grid_coords']
+                boundary_sample_occupancies = boundary_samples_npz['occupancies']
+                subsample_indices = np.random.randint(0, len(boundary_sample_points), num)
+                points.extend(boundary_sample_points[subsample_indices])
+                coords.extend(boundary_sample_coords[subsample_indices])
+                occupancies.extend(boundary_sample_occupancies[subsample_indices])
 
-        for i, num in enumerate(self.num_samples):
-            boundary_samples_path = path + '/boundary_{}_samples.npz'.format(self.sample_sigmas[i])
-            boundary_samples_npz = np.load(boundary_samples_path)
-            boundary_sample_points = boundary_samples_npz['points']
-            boundary_sample_coords = boundary_samples_npz['grid_coords']
-            boundary_sample_occupancies = boundary_samples_npz['occupancies']
-            subsample_indices = np.random.randint(0, len(boundary_sample_points), num)
-            points.extend(boundary_sample_points[subsample_indices])
-            coords.extend(boundary_sample_coords[subsample_indices])
-            occupancies.extend(boundary_sample_occupancies[subsample_indices])
+            assert len(points) == self.num_sample_points
+            assert len(occupancies) == self.num_sample_points
+            assert len(coords) == self.num_sample_points
 
-        assert len(points) == self.num_sample_points
-        assert len(occupancies) == self.num_sample_points
-        assert len(coords) == self.num_sample_points
+            # augmentation: TODO Make sure it is only done at training time
+            if self.mode == 'train':
+                coords, points, input = self.data_augmentation(coords,input,p=0.7,r_range=[-10,10],t_range=[20,20],erasing=True,g_std=0.05)
 
-        # augmentation: TODO Make sure it is only done at training time
-        if self.mode == 'train':
-            coords, points, input = self.data_augmentation(coords,input,p=0.7,r_range=[-10,10],t_range=[20,20],erasing=True,g_std=0.05)
-
-        return {'grid_coords':np.array(coords, dtype=np.float32),'occupancies': np.array(occupancies, dtype=np.float32),'points':np.array(points, dtype=np.float32), 'inputs': np.array(input, dtype=np.float32), 'path' : path}
+            return {'grid_coords':np.array(coords, dtype=np.float32),'occupancies': np.array(occupancies, dtype=np.float32),'points':np.array(points, dtype=np.float32), 'inputs': np.array(input, dtype=np.float32), 'path' : path}
 
     def get_loader(self, shuffle =True):
         # X = torch.utils.data.DataLoader(
