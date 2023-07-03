@@ -23,14 +23,18 @@ import vtk
 #output_file = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v64_mShapeNet64Vox/evaluation_486_@256/generation/prepared_data/CFA-PILOT_0008_SERIES00'+vol_num+'/surf_cropped_transformed.vtk
 
 
-base = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_1142_@256/generation/prepared_data/'
+base = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/generation/prepared_data/'
 filelist = os.listdir(base)
+
+if not os.path.exists('D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/predicted_meshes/'): 
+    os.mkdir('D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/predicted_meshes/')
 
 
 for file in filelist: 
-    input_file = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_1142_@256/generation/prepared_data/'+file+'/surf_cropped.vtk'
-    image_file = 'D:/DTUTeams/Kristine2023/CFA_BestPhase/ROI/img/'+file+'.nii'
-    output_file = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_1142_@256/generation/prepared_data/'+file+'/surf_cropped_transformed.vtk'
+    input_file = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/generation/prepared_data/'+file+'/surf_cropped.vtk'
+    image_file = 'D:/DTUTeams/Kristine2023/CFA1/ROI/img/'+file+'.nii'
+    output_file = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/generation/prepared_data/'+file+'/surf_cropped_transformed.vtk'
+    output_file2 = 'D:/DTUTeams/Kristine2023/NUDF-main/experiments/iimage_dist-0.45_0.45_0.1_sigmas-in1_out1_0.0_v128_mShapeNet128Vox/evaluation_948_@256/predicted_meshes/'+file+'.vtk'
 
 
     # ROI image
@@ -81,5 +85,10 @@ for file in filelist:
     
     writer = vtk.vtkPolyDataWriter()
     writer.SetFileName(output_file)
+    writer.SetInputData(surf_transformed)
+    writer.Write()
+    
+    writer = vtk.vtkPolyDataWriter()
+    writer.SetFileName(output_file2)
     writer.SetInputData(surf_transformed)
     writer.Write()
